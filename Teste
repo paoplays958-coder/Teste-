@@ -1,0 +1,67 @@
+-- TESTE 1: VERIFICAR SE A LIBRARY FUNCIONA
+print("=== INICIANDO TESTE ===")
+
+wait(2)
+
+local success, result = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/Library-ui/refs/heads/main/Redzhubui"))()
+end)
+
+if not success then
+    warn("❌ ERRO AO CARREGAR LIBRARY:")
+    warn(result)
+    print("⚠️ A biblioteca não pode ser carregada!")
+    print("⚠️ Troque de executor ou verifique sua internet")
+    return
+end
+
+print("✅ Library carregada com sucesso!")
+
+local redzlib = result
+
+if not redzlib then
+    warn("❌ Library retornou nil")
+    return
+end
+
+print("✅ Library inicializada!")
+
+-- Tentar criar window
+local windowSuccess, window = pcall(function()
+    return redzlib:MakeWindow({
+        Title = "TESTE",
+        SubTitle = "Testando",
+        SaveFolder = "Test.json"
+    })
+end)
+
+if not windowSuccess then
+    warn("❌ ERRO AO CRIAR WINDOW:")
+    warn(window)
+    return
+end
+
+print("✅ Window criada!")
+
+-- Tentar criar tab
+local tabSuccess, tab = pcall(function()
+    return window:MakeTab({
+        Name = "Teste",
+        Icon = "rbxassetid://7733955740",
+        PremiumOnly = false
+    })
+end)
+
+if not tabSuccess then
+    warn("❌ ERRO AO CRIAR TAB:")
+    warn(tab)
+    return
+end
+
+print("✅ Tab criada!")
+
+tab:AddLabel("SE VOCÊ ESTÁ VENDO ISSO, FUNCIONOU!")
+
+redzlib:Init()
+
+print("=== TESTE CONCLUÍDO COM SUCESSO ===")
